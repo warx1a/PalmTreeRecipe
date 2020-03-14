@@ -84,5 +84,31 @@ namespace PalmTreeRecipe.Connectors
                 return rowsAffected.Equals(1);
             }
         }
+
+        public User createUser(User user)
+        {
+            string query = "INSERT INTO User (username, password, emailAddress, sessionId, firstName, lastName, userType) VALUES " +
+                "(@username, @password, @emailaddress, @sessionid, @firstname, @lastname, @usertype)";
+            //the user doesn't have an id or a session id yet so we need to generate the session id
+            Guid sessionid = Guid.NewGuid();
+            user.sessionId = sessionid.ToString();
+            using(SqlConnection conn = new SqlConnection(DB_URL))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@username", user.username);
+                cmd.Parameters.AddWithValue("@password", user.password);
+                cmd.Parameters.AddWithValue("@emailaddress", user.emailAddress);
+                cmd.Parameters.AddWithValue("@sessionid", user.sessionId);
+                cmd.Parameters.AddWithValue("@firstname", user.firstName);
+                cmd.Parameters.AddWithValue("@lastname", user.lastName);
+                int rowsAffected = cmd.ExecuteNonQuery();
+                //if the query was successful
+                if(rowsAffected.Equals(1))
+                {
+                }
+            }
+            return user;
+        }
     }
 }

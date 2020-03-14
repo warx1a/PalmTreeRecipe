@@ -16,6 +16,7 @@ namespace PalmTreeRecipe.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
         public int userType { get; set; }
+        public string confirmPassword { get; set; }
 
         public User()
         {

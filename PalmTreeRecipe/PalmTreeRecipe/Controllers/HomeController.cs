@@ -10,28 +10,48 @@ namespace PalmTreeRecipe.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        [HttpGet]
+        public ActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
+        [HttpGet]
+        public ActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
-        public IActionResult Contact()
+        [HttpGet]
+        public ActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public ActionResult CreateUser()
         {
-            return View();
+            User u = new User();
+            return View(u);
+        }
+
+        [HttpPost]
+        public ActionResult CreateUser(User user)
+        {
+            return View(user);
+        }
+
+        [HttpGet]
+        public ActionResult Login()
+        {
+            Login l = new Login();
+            return View(l);
+        }
+
+        [HttpPost]
+        public ActionResult Login(Login login)
+        {
+            return View(login);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

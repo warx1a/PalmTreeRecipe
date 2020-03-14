@@ -1,0 +1,40 @@
+﻿@model User
+<div class="body-content">
+    @using(Html.BeginForm("CreateUser", "Home", new { @id = "frmCreateUser" }))
+    {
+        <table>
+            <tr>
+                <td>
+                    @Html.LabelFor(u => u.username, "Username:")
+                </td>
+                <td>
+                    @Html.TextBoxFor(u => u.username)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(u => u.password, "Password:")
+                </td>
+                <td>
+                    @Html.PasswordFor(u => u.password)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(u => u.confirmPassword, "Confirm password:")
+                </td>
+                <td>
+                    @Html.PasswordFor(u => u.confirmPassword)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(u => u.emailAddress, "Email address:")
+                </td>
+                <td>
+                    @Html.TextBoxFor(u => u.emailAddress)
+                </td>
+            </tr>
+        </table>
+    }
+</div>
