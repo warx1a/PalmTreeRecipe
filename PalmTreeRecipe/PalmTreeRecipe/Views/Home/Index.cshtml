@@ -1,7 +1,28 @@
-﻿
+﻿@using PalmTreeRecipe.Models
+@model Index
 @{
     ViewData["Title"] = "Welcome";
 }
-
-<h2>Index</h2>
-
+<header>
+</header>
+<div class="body-content">
+    <p>
+        Welcome to PalmTreeRecipe! This website is dedicated to sharing recipes with one another along with leaving each other constructive feedback on recipes.
+        Our website is built to help you innovate your cooking and try out new ideas you may not have thought of before. By joining our community of chefs and cooks
+        you can improve your cooking skills while creating delicious food from all around the world.
+    </p>
+    <div class="featured-recipes">
+        <p>These are some of our features recipes right now:</p>
+        @foreach(Recipe featRecipe in Model.featuredRecipes)
+        {
+            //will print out each featured recipe in here
+        }
+    </div>
+    <div class="latest-recipes">
+        <p>These are our latest recipes:</p>
+        @foreach(Recipe latestRecipe in Model.latestRecipes)
+        {
+            //will print out the latest recipes
+        }
+    </div>
+</div>

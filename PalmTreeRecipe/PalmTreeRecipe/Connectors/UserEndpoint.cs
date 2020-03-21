@@ -102,11 +102,7 @@ namespace PalmTreeRecipe.Connectors
                 cmd.Parameters.AddWithValue("@sessionid", user.sessionId);
                 cmd.Parameters.AddWithValue("@firstname", user.firstName);
                 cmd.Parameters.AddWithValue("@lastname", user.lastName);
-                int rowsAffected = cmd.ExecuteNonQuery();
-                //if the query was successful
-                if(rowsAffected.Equals(1))
-                {
-                }
+                cmd.ExecuteNonQuery();
             }
             return user;
         }

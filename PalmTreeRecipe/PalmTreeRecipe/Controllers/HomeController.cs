@@ -2,17 +2,28 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PalmTreeRecipe.Connectors;
 using PalmTreeRecipe.Models;
 
 namespace PalmTreeRecipe.Controllers
 {
     public class HomeController : Controller
     {
+
+        private Factory oFactory = new Factory();
+        private string alphaNumericRegex = @"(^[a-zA-Z0-9]+$)";
+
         [HttpGet]
         public ActionResult Index()
         {
+            Index idx = new Index();
+            //TODO: populate these fields w/ latest and featured recipes
+            idx.featuredRecipes = new List<Recipe>();
+            idx.latestRecipes = new List<Recipe>();
             return View();
         }
 
@@ -38,7 +49,42 @@ namespace PalmTreeRecipe.Controllers
         [HttpPost]
         public ActionResult CreateUser(User user)
         {
-            return View(user);
+            //add user validation here for the postback
+            //username validation
+            if(string.IsNullOrEmpty(user.username))
+            {
+                user.errorMessages.Add("Username cannot be empty");
+            } else if(!Regex.IsMatch(user.username, alphaNumericRegex))
+            {
+                user.errorMessages.Add("Username must be alphanumeric");
+            } else if(user.username.Length < 8)
+            {
+                user.errorMessages.Add("Username must be at least 5 characters");
+            }
+            //password validation
+            if(string.IsNullOrEmpty(user.password))
+            {
+                user.errorMessages.Add("Password cannot be empty");
+            } else if(string.IsNullOrEmpty(user.confirmPassword))
+            {
+                user.errorMessages.Add("The confirmation password cannot be empty");
+            } else if(!user.password.Equals(user.confirmPassword))
+            {
+                user.errorMessages.Add("The password and the confirmation must match");
+            } else if(user.password.Length < 8)
+            {
+                user.errorMessages.Add("The password must be at least 8 characters long");
+            }
+            //if we have errors display them back to the user
+            if(user.errorMessages.Count > 0)
+            {
+                return View(user);
+            } else
+            {
+                user = oFactory.userEndpoint.createUser(user);
+                HttpContext.Session.SetString("sessionid", user.sessionId);
+                return View("Index");
+            }
         }
 
         [HttpGet]
@@ -51,6 +97,26 @@ namespace PalmTreeRecipe.Controllers
         [HttpPost]
         public ActionResult Login(Login login)
         {
+            //add validation here to check the username/pwd combo
+            if(string.IsNullOrEmpty(login.username))
+            {
+                login.errorMessages.Add("Username cannot be empty");
+            }
+            if(string.IsNullOrEmpty(login.password))
+            {
+                login.errorMessages.Add("Password cannot be empty");
+            }
+            string sessionId = oFactory.userEndpoint.login(login.username, login.password);
+            //failed to login
+            if(sessionId == null)
+            {
+                login.errorMessages.Add("Invalid username or password");
+            } else
+            //we were successful so set the session id
+            {
+                HttpContext.Session.SetString("sessionid", sessionId);
+                return View("Index");
+            }
             return View(login);
         }
 
