@@ -19,7 +19,7 @@ namespace PalmTreeRecipe.Connectors
         /// <returns>session_id|null</returns>
         public string login(string username, string password)
         {
-            string query = "SELECT * FROM User WHERE username = @username AND password = @password";
+            string query = "SELECT * FROM [User] WHERE [username] = @username AND [password] = @password";
             using(SqlConnection conn = new SqlConnection(DB_URL))
             {
                 conn.Open();
@@ -42,7 +42,7 @@ namespace PalmTreeRecipe.Connectors
 
         public User getUserBySessionId(string sessionId)
         {
-            string query = "SELECT * FROM User WHERE sessionId = @sessionid";
+            string query = "SELECT * FROM [User] WHERE sessionId = @sessionid";
             using(SqlConnection conn = new SqlConnection(DB_URL))
             {
                 conn.Open();
@@ -73,7 +73,7 @@ namespace PalmTreeRecipe.Connectors
         /// <returns>true if successful, false otherwise</returns>
         public bool updateSessionForUser(int userId, string session_id)
         {
-            string query = "UPDATE User SET sessionId = @sessionid WHERE userId = @id";
+            string query = "UPDATE [User] SET sessionId = @sessionid WHERE userId = @id";
             using(SqlConnection conn = new SqlConnection(DB_URL))
             {
                 conn.Open();
@@ -87,7 +87,7 @@ namespace PalmTreeRecipe.Connectors
 
         public User createUser(User user)
         {
-            string query = "INSERT INTO User (username, password, emailAddress, sessionId, firstName, lastName, userType) VALUES " +
+            string query = "INSERT INTO [User] (username, [password], emailAddress, sessionId, firstName, lastName, userType) VALUES " +
                 "(@username, @password, @emailaddress, @sessionid, @firstname, @lastname, @usertype)";
             //the user doesn't have an id or a session id yet so we need to generate the session id
             Guid sessionid = Guid.NewGuid();
@@ -98,10 +98,11 @@ namespace PalmTreeRecipe.Connectors
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@username", user.username);
                 cmd.Parameters.AddWithValue("@password", user.password);
-                cmd.Parameters.AddWithValue("@emailaddress", user.emailAddress);
+                cmd.Parameters.AddWithValue("@emailaddress", PassValueOrDBNull(user.emailAddress));
                 cmd.Parameters.AddWithValue("@sessionid", user.sessionId);
-                cmd.Parameters.AddWithValue("@firstname", user.firstName);
-                cmd.Parameters.AddWithValue("@lastname", user.lastName);
+                cmd.Parameters.AddWithValue("@firstname", PassValueOrDBNull(user.firstName));
+                cmd.Parameters.AddWithValue("@lastname", PassValueOrDBNull(user.lastName));
+                cmd.Parameters.AddWithValue("@usertype", 0);
                 cmd.ExecuteNonQuery();
             }
             return user;

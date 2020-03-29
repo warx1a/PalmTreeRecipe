@@ -1,0 +1,8 @@
+﻿@model List<string>
+
+<div class="errorMessages">
+    @foreach(string err in Model)
+    {
+        <p class="errorMessage">@err</p>
+    }
+</div>

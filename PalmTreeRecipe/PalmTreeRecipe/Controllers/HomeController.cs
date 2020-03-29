@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +25,7 @@ namespace PalmTreeRecipe.Controllers
             //TODO: populate these fields w/ latest and featured recipes
             idx.featuredRecipes = new List<Recipe>();
             idx.latestRecipes = new List<Recipe>();
-            return View();
+            return View(idx);
         }
 
         [HttpGet]
@@ -81,9 +82,16 @@ namespace PalmTreeRecipe.Controllers
                 return View(user);
             } else
             {
+                using(SHA256 cipher = SHA256.Create())
+                {
+                    
+                }
                 user = oFactory.userEndpoint.createUser(user);
                 HttpContext.Session.SetString("sessionid", user.sessionId);
-                return View("Index");
+                Index idx = new Index();
+                idx.featuredRecipes = new List<Recipe>();
+                idx.latestRecipes = new List<Recipe>();
+                return View("Index", idx);
             }
         }
 
@@ -115,7 +123,10 @@ namespace PalmTreeRecipe.Controllers
             //we were successful so set the session id
             {
                 HttpContext.Session.SetString("sessionid", sessionId);
-                return View("Index");
+                Index idx = new Index();
+                idx.featuredRecipes = new List<Recipe>();
+                idx.latestRecipes = new List<Recipe>();
+                return View("Index", idx);
             }
             return View(login);
         }

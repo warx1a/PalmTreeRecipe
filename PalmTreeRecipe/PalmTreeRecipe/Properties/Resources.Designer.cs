@@ -61,7 +61,7 @@ namespace PalmTreeRecipe.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Server=tcp:palmtree.database.windows.net,1433;Initial Catalog=palmtreerecipe;Persist Security Info=False;User ID=lj553650;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;.
+        ///   Looks up a localized string similar to Server=tcp:palmtree.database.windows.net,1433;Initial Catalog=palmtreerecipe;Persist Security Info=False;User ID=lj553650;Password={};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;.
         /// </summary>
         internal static string DatabaseConnection {
             get {

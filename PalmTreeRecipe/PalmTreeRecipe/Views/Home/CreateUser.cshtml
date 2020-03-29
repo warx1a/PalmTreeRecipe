@@ -1,5 +1,8 @@
 ﻿@model User
 <div class="body-content">
+    @{ 
+        Html.RenderPartial("ErrorMessagePartial", Model.errorMessages);
+    }
     @using(Html.BeginForm("CreateUser", "Home", new { @id = "frmCreateUser" }))
     {
         <table>
@@ -33,6 +36,14 @@
                 </td>
                 <td>
                     @Html.TextBoxFor(u => u.emailAddress)
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <input type="submit" value="Register"/>
                 </td>
             </tr>
         </table>

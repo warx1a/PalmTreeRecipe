@@ -9,6 +9,7 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
+@using Microsoft.AspNetCore.Http;
 <body>
     <nav>
         <ul>
@@ -17,16 +18,54 @@
                     @Html.ActionLink("Home", "Index", "Home")
                 </p>
             </li>
-            <li>
-                <p>
-                    @Html.ActionLink("Login", "Login", "Home")
-                </p>
-            </li>
-            <li>
-                <p>
-                    @Html.ActionLink("Register", "CreateUser", "Home")
-                </p>
-            </li>
+            @if (!string.IsNullOrEmpty(Context.Session.GetString("sessionid")))
+            {
+                Factory factory = new Factory();
+                User user = factory.userEndpoint.getUserBySessionId(Context.Session.GetString("sessionid"));
+                //if they have a first name set use that, if they have a last name set add that, if neither is set user their username
+                string displayName;
+                if(!string.IsNullOrEmpty(user.firstName))
+                {
+                    if(string.IsNullOrEmpty(user.lastName))
+                    {
+                        displayName = user.firstName;
+                    } else
+                    {
+                        displayName = user.firstName + " " + user.lastName;
+                    }
+                } else
+                {
+                    displayName = user.username;
+                }
+                <li>
+                    <p>
+                        Welcome @displayName
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        @Html.ActionLink("Profile", "Profile", "Home")
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        @Html.ActionLink("Create Recipe", "CreateRecipe", "Home")
+                    </p>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <p>
+                        @Html.ActionLink("Login", "Login", "Home")
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        @Html.ActionLink("Register", "CreateUser", "Home")
+                    </p>
+                </li>
+            }
             <li>
                 <p>
                     @Html.ActionLink("Contact", "Contact", "Home")

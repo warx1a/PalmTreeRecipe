@@ -46,6 +46,12 @@ a:-webkit-any-link {
     text-decoration: none;
 }
 
+.errorMessages{
+    text-align: center;
+    font-weight: bold;
+    color: red;
+}
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

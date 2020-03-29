@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DatabaseConnection" xml:space="preserve">
-    <value>Server=tcp:palmtree.database.windows.net,1433;Initial Catalog=palmtreerecipe;Persist Security Info=False;User ID=lj553650;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;</value>
+    <value>Server=tcp:palmtree.database.windows.net,1433;Initial Catalog=palmtreerecipe;Persist Security Info=False;User ID=lj553650;Password=Duff153z;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;</value>
   </data>
 </root>

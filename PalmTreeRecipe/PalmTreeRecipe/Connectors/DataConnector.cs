@@ -21,6 +21,17 @@ namespace PalmTreeRecipe.Connectors
             return default;
         }
 
+        public object PassValueOrDBNull(object value)
+        {
+            if(value == null)
+            {
+                return DBNull.Value;
+            } else
+            {
+                return value;
+            }
+        }
+
 
     }
 }
