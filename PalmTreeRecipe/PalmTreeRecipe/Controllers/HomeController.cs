@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -82,10 +81,6 @@ namespace PalmTreeRecipe.Controllers
                 return View(user);
             } else
             {
-                using(SHA256 cipher = SHA256.Create())
-                {
-                    
-                }
                 user = oFactory.userEndpoint.createUser(user);
                 HttpContext.Session.SetString("sessionid", user.sessionId);
                 Index idx = new Index();
@@ -122,13 +117,35 @@ namespace PalmTreeRecipe.Controllers
             } else
             //we were successful so set the session id
             {
-                HttpContext.Session.SetString("sessionid", sessionId);
+                Response.HttpContext.Session.SetString("sessionid", sessionId);
                 Index idx = new Index();
                 idx.featuredRecipes = new List<Recipe>();
                 idx.latestRecipes = new List<Recipe>();
                 return View("Index", idx);
             }
             return View(login);
+        }
+
+        [HttpGet]
+        public ActionResult Profile()
+        {
+            Profile userProfile = new Profile();
+            if(!string.IsNullOrEmpty(Request.HttpContext.Session.GetString("sessionid")))
+            {
+                User loggedInUser = oFactory.userEndpoint.getUserBySessionId(HttpContext.Session.GetString("sessionid"));
+                if(loggedInUser == null)
+                {
+                    userProfile.errorMessages.Add("No user was able to be retrieved. Try loggin in again");
+                } else
+                {
+                    userProfile.user = loggedInUser;
+                }
+            //we weren't able to find a user for the session id. make them login again
+            } else
+            {
+                userProfile.errorMessages.Add("No user was able to be retrieved. Try logging in again");
+            }
+            return View(userProfile);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

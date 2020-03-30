@@ -1,1 +1,56 @@
 ﻿@model Profile
+
+<div class="body-content">
+    <table>
+        @if(Model.errorMessages.Count > 0 || Model.user == null)
+        {
+            //we probably couldn't find the user for the current session id (might be null)
+            <tr>
+                <td>
+                    @Html.ActionLink("Login", "Login", "Home")
+                </td>
+            </tr>
+        } else
+        {
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.user.firstName, "First Name:")
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.user.firstName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.user.lastName, "Last Name:")
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.user.lastName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.user.emailAddress, "Email:")
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.user.emailAddress)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.user.username, "Username:")
+                </td>
+                <td>
+                    @Html.DisplayFor( m => m.user.username)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="./UpdateProfile">
+                        <button type="button">Update Profile</button>
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

@@ -59,3 +59,15 @@ a:-webkit-any-link {
         display: none;
     }
 }
+
+.body-content table {
+    margin: 0 auto;
+}
+
+.body-content table tr {
+    margin: 5px 0px 5px 0px;
+}
+
+.container {
+    background-color: var(--tan);
+}

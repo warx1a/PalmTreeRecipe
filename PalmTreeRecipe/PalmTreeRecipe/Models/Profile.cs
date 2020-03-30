@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace PalmTreeRecipe.Models {
-    public class Profile {
+    public class Profile:
+        BaseModel {
 
         public Profile()
         {
