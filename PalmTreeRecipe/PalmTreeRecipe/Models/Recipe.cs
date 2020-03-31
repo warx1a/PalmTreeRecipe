@@ -7,5 +7,15 @@ namespace PalmTreeRecipe.Models
 {
     public class Recipe
     {
+
+        public Recipe()
+        {
+
+        }
+
+        public string RecipeName { get; set; }
+        public List<string> Ingredients { get; set; }
+        public List<string> Steps { get; set; }
+
     }
 }

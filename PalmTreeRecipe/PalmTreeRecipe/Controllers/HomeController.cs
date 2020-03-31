@@ -135,7 +135,7 @@ namespace PalmTreeRecipe.Controllers
                 User loggedInUser = oFactory.userEndpoint.getUserBySessionId(HttpContext.Session.GetString("sessionid"));
                 if(loggedInUser == null)
                 {
-                    userProfile.errorMessages.Add("No user was able to be retrieved. Try loggin in again");
+                    userProfile.errorMessages.Add("No user was able to be retrieved. Try logging in again");
                 } else
                 {
                     userProfile.user = loggedInUser;
@@ -143,9 +143,36 @@ namespace PalmTreeRecipe.Controllers
             //we weren't able to find a user for the session id. make them login again
             } else
             {
-                userProfile.errorMessages.Add("No user was able to be retrieved. Try logging in again");
+                userProfile.errorMessages.Add("No session info was stored. Try logging in again");
             }
             return View(userProfile);
+        }
+
+        [HttpGet]
+        public ActionResult UpdateProfile()
+        {
+            Profile userProfile = new Profile();
+            if(!string.IsNullOrEmpty(Request.HttpContext.Session.GetString("sessionid")))
+            {
+                User loggedInUser = oFactory.userEndpoint.getUserBySessionId(HttpContext.Session.GetString("sessionid"));
+                if(loggedInUser != null)
+                {
+                    userProfile.user = loggedInUser;
+                } else
+                {
+                    userProfile.errorMessages.Add("No user was able to be retrieved. Try logging in again");
+                }
+            } else
+            {
+                userProfile.errorMessages.Add("No session info was stored. Try logging in again");
+            }
+            return View(userProfile);
+        }
+
+        public ActionResult CreateRecipe()
+        {
+            Recipe recipe = new Recipe();
+            return View(recipe);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

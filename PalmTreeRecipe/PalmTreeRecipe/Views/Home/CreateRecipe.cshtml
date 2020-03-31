@@ -1,0 +1,34 @@
+﻿@model Recipe
+
+<div class="body-content">
+    @using(Html.BeginForm("CreateRecipe", "Home", FormMethod.Post))
+    {
+        <table>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.RecipeName, "Recipe Name:")
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.RecipeName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.Ingredients, "Ingredients:")
+                </td>
+                <td>
+                    <button type="button" id="btnAddIngredient">Add Ingredient</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.Steps, "Steps:")
+                </td>
+                <td>
+                    <button type="button" id="btnAddStep">Add Step</button>
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+
