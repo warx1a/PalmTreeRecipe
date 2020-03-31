@@ -8,7 +8,6 @@
 
 
 body {
-    padding-bottom: 20px;
     margin: 0;
 }
 
@@ -19,8 +18,14 @@ body {
     padding-right: 15px;
 }
 
+.body-content p {
+    margin: 0px 0px 1em 0px;
+    padding-top: 1em;
+}
+
 nav {
     background-color: var(--medbrown);
+    height: 10vh;
 }
 
 nav ul {
@@ -29,6 +34,7 @@ nav ul {
     list-style: none;
     justify-content: space-evenly;
     margin: 0;
+    height: 100%;
 }
 
 nav ul li p {
@@ -60,6 +66,10 @@ a:-webkit-any-link {
     }
 }
 
+.no-close .ui-dialog-titlebar-close {
+    display: none;
+}
+
 .body-content table {
     margin: 0 auto;
 }
@@ -70,4 +80,19 @@ a:-webkit-any-link {
 
 .container {
     background-color: var(--tan);
+    height: 90vh;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer hr {
+    margin-top: 0;
+}
+
+footer p {
+    margin: 0;
 }
