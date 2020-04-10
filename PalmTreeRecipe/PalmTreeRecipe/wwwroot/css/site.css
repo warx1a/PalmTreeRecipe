@@ -96,3 +96,13 @@ footer hr {
 footer p {
     margin: 0;
 }
+
+.ui-dialog {
+    background: white;
+    border: 2px solid black;
+}
+
+.ingredientHolder, .stepHolder {
+    width: 45%;
+    display: inline-block;
+}

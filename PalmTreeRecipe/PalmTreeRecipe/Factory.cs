@@ -1,4 +1,5 @@
 ﻿using PalmTreeRecipe.Connectors;
+using PalmTreeRecipe.Methods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,17 @@ namespace PalmTreeRecipe {
                     _userEndpoint = new UserEndpoint();
                 }
                 return _userEndpoint;
+            }
+        }
+
+        private UserValidation _userValidation;
+        public UserValidation userValidation {
+            get {
+                if(_userValidation == null)
+                {
+                    _userValidation = new UserValidation();
+                }
+                return _userValidation;
             }
         }
 

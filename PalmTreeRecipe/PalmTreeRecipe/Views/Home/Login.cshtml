@@ -1,34 +1,36 @@
 ﻿@model Login
-<div class="body-content">
-    @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @id = "frmLogin" }))
-    {
+    <div class="body-content">
+        @{
+            Html.RenderPartial("ErrorMessagePartial", Model.errorMessages);
+        }
+        @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @id = "frmLogin" }))
+        {
 
-        <table>
-            <tr>
-                <td>
-                    @Html.LabelFor(m => m.username, "Username:")
-                </td>
-                <td>
-                    @Html.TextBoxFor(m => m.username)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.LabelFor(m => m.password, "Password:")
-                </td>
-                <td>
-                    @Html.PasswordFor(m => m.password)
-                </td>
-            </tr>
-            <tr>
-                <td>
+            <table>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.username, "Username:")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.username)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.password, "Password:")
+                    </td>
+                    <td>
+                        @Html.PasswordFor(m => m.password)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input type="submit" value="Login" />
+                    </td>
+                </tr>
+            </table>
 
-                </td>
-                <td>
-                    <input type="submit" value="Login"/>
-                </td>
-            </tr>
-        </table>
-
-    }
-</div>
+        }
+    </div>

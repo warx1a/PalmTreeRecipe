@@ -107,5 +107,27 @@ namespace PalmTreeRecipe.Connectors
             }
             return user;
         }
+
+        public bool updateUser(User user)
+        {
+            string query = "UPDATE [User] SET emailAddress = @email, firstName = @firstname, lastName = @lastname WHERE [userId] = @id";
+            using(SqlConnection conn = new SqlConnection(DB_URL))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                if(user.emailAddress == null)
+                {
+                    cmd.Parameters.AddWithValue("@email", DBNull.Value);
+                } else
+                {
+                    cmd.Parameters.AddWithValue("@email", user.emailAddress);
+                }
+                cmd.Parameters.AddWithValue("@firstname", user.firstName);
+                cmd.Parameters.AddWithValue("@lastname", user.lastName);
+                cmd.Parameters.AddWithValue("@id", user.userId);
+                int rowsAffected = cmd.ExecuteNonQuery();
+                return rowsAffected.Equals(1);
+            }
+        }
     }
 }

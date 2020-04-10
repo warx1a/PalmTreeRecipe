@@ -15,7 +15,6 @@ namespace PalmTreeRecipe.Controllers
     {
 
         private Factory oFactory = new Factory();
-        private string alphaNumericRegex = @"(^[a-zA-Z0-9]+$)";
 
         [HttpGet]
         public ActionResult Index()
@@ -49,37 +48,8 @@ namespace PalmTreeRecipe.Controllers
         [HttpPost]
         public ActionResult CreateUser(User user)
         {
-            //add user validation here for the postback
-            //username validation
-            if(string.IsNullOrEmpty(user.username))
-            {
-                user.errorMessages.Add("Username cannot be empty");
-            } else if(!Regex.IsMatch(user.username, alphaNumericRegex))
-            {
-                user.errorMessages.Add("Username must be alphanumeric");
-            } else if(user.username.Length < 8)
-            {
-                user.errorMessages.Add("Username must be at least 5 characters");
-            }
-            //password validation
-            if(string.IsNullOrEmpty(user.password))
-            {
-                user.errorMessages.Add("Password cannot be empty");
-            } else if(string.IsNullOrEmpty(user.confirmPassword))
-            {
-                user.errorMessages.Add("The confirmation password cannot be empty");
-            } else if(!user.password.Equals(user.confirmPassword))
-            {
-                user.errorMessages.Add("The password and the confirmation must match");
-            } else if(user.password.Length < 8)
-            {
-                user.errorMessages.Add("The password must be at least 8 characters long");
-            }
-            //if we have errors display them back to the user
-            if(user.errorMessages.Count > 0)
-            {
-                return View(user);
-            } else
+            List<string> errors = new List<string>();
+            if(oFactory.userValidation.ValidateAddUpdateProfileInfo(user, true, ref errors))
             {
                 user = oFactory.userEndpoint.createUser(user);
                 HttpContext.Session.SetString("sessionid", user.sessionId);
@@ -87,6 +57,10 @@ namespace PalmTreeRecipe.Controllers
                 idx.featuredRecipes = new List<Recipe>();
                 idx.latestRecipes = new List<Recipe>();
                 return View("Index", idx);
+            } else
+            {
+                user.errorMessages = errors;
+                return View(user);
             }
         }
 
@@ -168,10 +142,40 @@ namespace PalmTreeRecipe.Controllers
             }
             return View(userProfile);
         }
+        
+        [HttpPost]
+        public ActionResult UpdateProfile(Profile p)
+        {
+            List<string> errors = new List<string>();
+            if(oFactory.userValidation.ValidateAddUpdateProfileInfo(p.user, false, ref errors))
+            {
+                if(oFactory.userEndpoint.updateUser(p.user))
+                {
+                    return View("Profile", p);
+                } else
+                {
+                    errors.Add("Your profile was unable to be updated. Please try again");
+                    p.user.errorMessages = errors;
+                    return View(p);
+                }
+            } else
+            {
+                p.user.errorMessages = errors;
+                return View(p);
+            }
+        }
 
+        [HttpGet]
         public ActionResult CreateRecipe()
         {
             Recipe recipe = new Recipe();
+            return View(recipe);
+        }
+
+        [HttpPost]
+        public ActionResult CreateRecipe(Recipe recipe)
+        {
+            //TODO: add in the save logic for recipes here
             return View(recipe);
         }
 

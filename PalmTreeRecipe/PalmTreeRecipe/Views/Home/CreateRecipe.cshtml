@@ -21,6 +21,9 @@
                 </td>
             </tr>
             <tr>
+                <td></td>
+            </tr>
+            <tr>
                 <td>
                     @Html.LabelFor(m => m.Steps, "Steps:")
                 </td>
@@ -28,9 +31,57 @@
                     <button type="button" id="btnAddStep">Add Step</button>
                 </td>
             </tr>
+            <tr>
+                <td></td>
+                <td><button type="submit">Create Recipe</button></td>
+            </tr>
         </table>
+        <div class="ingredientHolder">
+            <p>Current Ingredients:</p>
+            <table id="tblCurrentIngredients">
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="stepHolder">
+            <p>Current Steps:</p>
+            <table id="tblCurrentSteps">
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
         <div id="ingredientDialog">
-            <p>Hello</p>
+            <table>
+                <tr>
+                    <td>
+                        <label for="txtIngredientName">Ingredient Name:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="txtIngredientName"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="txtQuantity">Quantity:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="txtQuantity"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="stepDialog">
+            <table>
+                <tr>
+                    <td>
+                        <label for="txtStepValue">Step:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="txtStepValue"/>
+                    </td>
+                </tr>
+            </table>
         </div>
     }
 </div>

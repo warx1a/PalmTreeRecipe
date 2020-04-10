@@ -1,0 +1,51 @@
+﻿@model Profile
+
+    <div class="body-content">
+        @{
+            Html.RenderPartial("ErrorMessagePartial", Model.user.errorMessages);
+        }
+        @using (Html.BeginForm("UpdateProfile", "Home", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => m.user.userId)
+            @Html.HiddenFor(m => m.user.username)
+            <table>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.user.firstName, "First Name:")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.user.firstName)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.user.lastName, "Last Name:")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.user.lastName)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.user.emailAddress, "Email:")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.user.emailAddress)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.user.username, "Username:")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.user.username)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit">Update Profile</button>
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
