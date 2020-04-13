@@ -14,8 +14,8 @@ namespace PalmTreeRecipe.Models
         }
 
         public string RecipeName { get; set; }
-        public List<string> Ingredients { get; set; }
-        public List<string> Steps { get; set; }
+        public string Ingredients { get; set; }
+        public string Steps { get; set; }
 
     }
 }

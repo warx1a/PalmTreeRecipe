@@ -100,7 +100,7 @@
         var stepVal = "";
         for (var i = 0; i < recipeSteps.length; i++) {
             var step = recipeSteps[i];
-            stepVal += "{text: " + step + "'},";
+            stepVal += "{text: '" + step + "'},";
         }
         stepVal = stepVal.substring(0, stepVal.length - 1);
         $("#Steps").val(stepVal);
