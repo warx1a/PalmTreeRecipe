@@ -1,8 +1,13 @@
 ﻿@model Recipe
 
 <div class="body-content">
+    @{
+        Html.RenderPartial("ErrorMessagePartial", Model.errorMessages);
+    }
     @using(Html.BeginForm("CreateRecipe", "Home", FormMethod.Post))
     {
+        @Html.HiddenFor(m => m.Ingredients)
+        @Html.HiddenFor(m => m.Steps)
         <table>
             <tr>
                 <td>
@@ -14,7 +19,7 @@
             </tr>
             <tr>
                 <td>
-                    @Html.LabelFor(m => m.Ingredients, "Ingredients:")
+                    <label for="btnAddIngredient">Ingredients:</label>
                 </td>
                 <td>
                     <button type="button" id="btnAddIngredient">Add Ingredient</button>
@@ -25,7 +30,7 @@
             </tr>
             <tr>
                 <td>
-                    @Html.LabelFor(m => m.Steps, "Steps:")
+                    <label for="btnAddStep">Steps:</label>
                 </td>
                 <td>
                     <button type="button" id="btnAddStep">Add Step</button>
@@ -33,7 +38,7 @@
             </tr>
             <tr>
                 <td></td>
-                <td><button type="submit">Create Recipe</button></td>
+                <td><button type="submit" id="btnCreateRecipe">Create Recipe</button></td>
             </tr>
         </table>
         <div class="ingredientHolder">

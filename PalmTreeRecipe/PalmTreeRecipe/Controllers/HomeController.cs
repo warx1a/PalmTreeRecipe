@@ -175,6 +175,23 @@ namespace PalmTreeRecipe.Controllers
         [HttpPost]
         public ActionResult CreateRecipe(Recipe recipe)
         {
+            User loggedInUser = oFactory.userEndpoint.getUserBySessionId(HttpContext.Session.GetString("sessionid"));
+            if (loggedInUser == null)
+            {
+                return View("Login");
+            }
+            else
+            {
+                List<string> errors = new List<string>();
+                if(oFactory.recipeValidation.ValidateAddUpdateRecipe(recipe, ref errors))
+                {
+                    recipe = oFactory.recipeEndpoint.addRecipe(loggedInUser, recipe);
+                } else
+                {
+                    recipe.errorMessages = errors;
+                    return View(recipe);
+                }
+            }
             //TODO: add in the save logic for recipes here
             return View(recipe);
         }

@@ -25,6 +25,17 @@ namespace PalmTreeRecipe {
             }
         }
 
+        private RecipeEndpoint _recipeEndpoint;
+        public RecipeEndpoint recipeEndpoint {
+            get {
+                if(_recipeEndpoint == null)
+                {
+                    _recipeEndpoint = new RecipeEndpoint();
+                }
+                return _recipeEndpoint;
+            }
+        }
+
         private UserValidation _userValidation;
         public UserValidation userValidation {
             get {
@@ -33,6 +44,17 @@ namespace PalmTreeRecipe {
                     _userValidation = new UserValidation();
                 }
                 return _userValidation;
+            }
+        }
+
+        private RecipeValidation _recipeValidation;
+        public RecipeValidation recipeValidation {
+            get {
+                if(_recipeValidation == null)
+                {
+                    _recipeValidation = new RecipeValidation();
+                }
+                return _recipeValidation;
             }
         }
 

@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
 
+    var recipeSteps = [];
+    var recipeIngredients = [];
+
     $("#ingredientDialog").hide();
     $("#stepDialog").hide();
 
@@ -69,4 +72,37 @@
         var parentTR = $(this).closest("tr");
         $(parentTR).remove();
     })
+
+    //if they click the create recipe button
+    $("#btnCreateRecipe").click(function () {
+        $("#tblCurrentIngredients tr").each(function (idx, elem) {
+            var ingredientName = $(elem).find("td")[0].innerHTML;
+            var ingredientQty = $(elem).find("td")[1].innerHTML;
+            var ingredientJSON = {
+                name: ingredientName,
+                quantity: ingredientQty
+            };
+            recipeIngredients.push(ingredientJSON);
+        });
+        $("#tblCurrentSteps tr").each(function (idx, elem) {
+            var stepText = $(elem).find("td")[0].innerHTML;
+            recipeSteps.push(stepText);
+        });
+        //go through each ingredient and add it to the hidden
+        var hdnIngredientVal = "";
+        for (var i = 0; i < recipeIngredients.length; i++) {
+            var ingredient = recipeIngredients[i];
+            hdnIngredientVal += "{name:'" + ingredient.name + "' quantity:'" + ingredient.quantity + "'},";
+        }
+        hdnIngredientVal = hdnIngredientVal.substring(0, hdnIngredientVal.length - 1);
+        $("#Ingredients").val(hdnIngredientVal);
+        //go through each step and add it to the hidden
+        var stepVal = "";
+        for (var i = 0; i < recipeSteps.length; i++) {
+            var step = recipeSteps[i];
+            stepVal += "{text: " + step + "'},";
+        }
+        stepVal = stepVal.substring(0, stepVal.length - 1);
+        $("#Steps").val(stepVal);
+    });
 });
