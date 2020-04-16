@@ -42,6 +42,10 @@ namespace PalmTreeRecipe.Connectors
 
         public User getUserBySessionId(string sessionId)
         {
+            if(string.IsNullOrEmpty(sessionId))
+            {
+                return null;
+            }
             string query = "SELECT * FROM [User] WHERE sessionId = @sessionid";
             using(SqlConnection conn = new SqlConnection(DB_URL))
             {

@@ -185,7 +185,9 @@ namespace PalmTreeRecipe.Controllers
                 List<string> errors = new List<string>();
                 if(oFactory.recipeValidation.ValidateAddUpdateRecipe(recipe, ref errors))
                 {
-                    recipe = oFactory.recipeEndpoint.addRecipe(loggedInUser, recipe);
+                    recipe.UserID = loggedInUser.userId;
+                    recipe.CreatedOnDateTime = DateTime.Now;
+                    recipe = oFactory.recipeEndpoint.addRecipe(recipe);
                 } else
                 {
                     recipe.errorMessages = errors;

@@ -15,6 +15,10 @@
                     click: function () {
                         var ingredient = $("#txtIngredientName").val();
                         var quantity = $("#txtQuantity").val();
+                        if (ingredient == "" || quantity == "") {
+                            $(".errorMessages").append("<p class='errorMessage'>Ingredient name and quantity must be filled out</p>");
+                            return;
+                        }
                         //build out the table row to add to the current ingredients table
                         var ingredientTR = "<tr>";
                         ingredientTR += "<td>" + ingredient + "</td>";
@@ -25,17 +29,20 @@
                         $("#txtIngredientName").val("");
                         $("#txtQuantity").val("");
                         $(this).dialog("close");
-                    }
+                    },
+                    id: "postbackAddIngredient"
                 },
                 {
                     text: "Cancel",
                     click: function () {
                         $(this).dialog("close");
-                    }
+                    },
+                    class: "cancelBtn"
                 }
             ],
             modal: true
         });
+        $(".button.ui-dialog-titlebar-close").remove();
     });
 
     //if they click to add a step we want to show the add step modal
@@ -47,6 +54,11 @@
                     click: function () {
                         //build out the table row, add it, and reset the step fields
                         var stepText = $("#txtStepValue").val();
+                        //if they don't enter anything for the text don't add the step
+                        if (stepText == "") {
+                            $(".errorMessages").append("<p class='errorMessage'>Step cannot be empty</p>");
+                            return;
+                        }
                         var stepTR = "<tr>";
                         stepTR += "<td>" + stepText + "</td>";
                         stepTR += "<td><button type='button' class='removeStep'>X</button></td>";
@@ -54,17 +66,20 @@
                         $("#tblCurrentSteps tbody").append(stepTR);
                         $("#txtStepValue").val("");
                         $(this).dialog("close");
-                    }
+                    },
+                    id: "postbackAddStep"
                 },
                 {
                     text: "Cancel",
                     click: function () {
                         $(this).dialog("close");
-                    }
+                    },
+                    class: "cancelBtn"
                 }
             ],
             modal: true
-        })
+        });
+        $(".ui-dialog-titlebar-close").remove();
     });
 
     //if they want to remove a step remove the TR
@@ -104,5 +119,10 @@
         }
         stepVal = stepVal.substring(0, stepVal.length - 1);
         $("#Steps").val(stepVal);
+    });
+
+    //if they click the cancel button close the dialog
+    $(".cancelBtn").click(function () {
+
     });
 });
