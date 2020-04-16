@@ -120,9 +120,4 @@
         stepVal = stepVal.substring(0, stepVal.length - 1);
         $("#Steps").val(stepVal);
     });
-
-    //if they click the cancel button close the dialog
-    $(".cancelBtn").click(function () {
-
-    });
 });

@@ -198,6 +198,22 @@ namespace PalmTreeRecipe.Controllers
             return View(recipe);
         }
 
+        [HttpGet]
+        public ActionResult SearchRecipe()
+        {
+            RecipeSearch search = new RecipeSearch();
+            search.SearchResults = new List<Recipe>();
+            return View(search);
+        }
+
+        [HttpPost]
+        public ActionResult SearchRecipe(RecipeSearch search)
+        {
+            List<Recipe> searchResults = oFactory.recipeEndpoint.searchRecipes(search);
+            search.SearchResults = searchResults;
+            return View(search);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

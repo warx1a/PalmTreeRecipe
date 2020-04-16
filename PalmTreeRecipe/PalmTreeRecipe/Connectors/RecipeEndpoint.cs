@@ -58,5 +58,55 @@ namespace PalmTreeRecipe.Connectors {
             return latestRecipes;
         }
 
+        public List<Recipe> searchRecipes(RecipeSearch search)
+        {
+            List<Recipe> searchResults = new List<Recipe>();
+
+            bool bHasTypedText = !string.IsNullOrEmpty(search.TypedText);
+            bool bHasUserID = !search.SearchByUserID.Equals(0);
+
+            string query = "SELECT * FROM [Recipe]";
+            if(bHasTypedText)
+            {
+                query += " WHERE [recipeName] LIKE %@name%";
+            }
+            //if we have typed text it'll be an "an". if not we're only comparing against user id
+            if(bHasUserID && bHasTypedText)
+            {
+                query += " AND [userId] = @id";
+            } else if(bHasUserID && !bHasTypedText)
+            {
+                query += " WHERE [userId] = @id";
+            }
+            using(SqlConnection conn = new SqlConnection(DB_URL))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                if(bHasTypedText)
+                {
+                    cmd.Parameters.AddWithValue("@name", search.TypedText);
+                }
+                if(bHasUserID)
+                {
+                    cmd.Parameters.AddWithValue("@id", search.SearchByUserID);
+                }
+                SqlDataReader results = cmd.ExecuteReader();
+                while(results.Read())
+                {
+                    Recipe r = new Recipe();
+                    r.RecipeID = getValueOrDefault<int>(0, results);
+                    r.RecipeName = getValueOrDefault<string>(2, results);
+                    r.UserID = getValueOrDefault<int>(1, results);
+                    r.Steps = getValueOrDefault<string>(3, results);
+                    r.Icon = getValueOrDefault<string>(4, results);
+                    r.Tags = getValueOrDefault<string>(5, results);
+                    r.Ingredients = getValueOrDefault<string>(6, results);
+                    r.CreatedOnDateTime = getValueOrDefault<DateTime>(7, results);
+                    searchResults.Add(r);
+                }
+            }
+            return searchResults;
+        }
+
     }
 }

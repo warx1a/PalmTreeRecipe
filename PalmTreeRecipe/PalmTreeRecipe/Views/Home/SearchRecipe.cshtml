@@ -1,1 +1,41 @@
-﻿@Model RecipeSearch
+﻿@using PalmTreeRecipe.Models;
+@model RecipeSearch
+
+<div class="body-content">
+    @using(Html.BeginForm("SearchRecipe", "Home", FormMethod.Post))
+    {
+        <table>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.TypedText, "Search: ")
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.TypedText)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.SearchByUserID, "User: ")
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.SearchByUserID)
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <input type="submit" value="Search" />
+                </td>
+            </tr>
+        </table>
+    }
+
+    <div class="searchResultArea">
+        @foreach(Recipe recipe in Model.SearchResults)
+        {
+
+        }
+    </div>
+</div>
