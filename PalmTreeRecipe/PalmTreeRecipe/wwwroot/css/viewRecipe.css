@@ -1,0 +1,15 @@
+﻿
+.recipeTitle h2 {
+    text-align: center;
+    margin: 0;
+}
+
+.recipeIngredients {
+    width: 45vw;
+    display: inline-block;
+}
+
+.recipeSteps {
+    display: inline-block;
+    width: 50vw;
+}

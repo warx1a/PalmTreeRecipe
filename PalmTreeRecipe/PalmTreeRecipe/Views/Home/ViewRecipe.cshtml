@@ -1,15 +1,42 @@
 ﻿@using PalmTreeRecipe.Models
 @model Recipe
 
+<link rel="stylesheet" type="text/css" href="~/css/viewRecipe.css" />
+
 <div class="body-content">
     <div class="recipeTitle">
         <h2>@Model.RecipeName</h2>
     </div>
-    <div class="recipeSteps">
+    <div class="recipeIngredients">
+        <h3>Ingredients Needed</h3>
         <table>
+            @foreach(Ingredient ingredient in Model.Ingredients)
+            {
+                <tr>
+                    <td>
+                        @ingredient.name
+                    </td>
+                    <td>
+                        @ingredient.quantity
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="recipeSteps">
+        <h3>Steps</h3>
+        <table>
+            @{ 
+                int stepIdx = 1;
+            }  
             @foreach(Step step in Model.Steps)
             {
-
+                <tr>
+                    <td>
+                        @stepIdx.ToString() @step.text
+                    </td>
+                </tr>
+                stepIdx++;
             }
         </table>
     </div>
