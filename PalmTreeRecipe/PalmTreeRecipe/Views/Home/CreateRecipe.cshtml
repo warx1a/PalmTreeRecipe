@@ -6,8 +6,8 @@
     }
     @using(Html.BeginForm("CreateRecipe", "Home", FormMethod.Post))
     {
-        @Html.HiddenFor(m => m.Ingredients)
-        @Html.HiddenFor(m => m.Steps)
+        @Html.HiddenFor(m => m.EnteredIngredients)
+        @Html.HiddenFor(m => m.EnteredSteps)
         <table>
             <tr>
                 <td>
@@ -92,4 +92,3 @@
 </div>
 
 <script type="text/javascript" src="~/js/CreateRecipe.js"></script>
-

@@ -33,9 +33,30 @@
     }
 
     <div class="searchResultArea">
-        @foreach(Recipe recipe in Model.SearchResults)
-        {
-
-        }
+        <table>
+            <tr>
+                <th>Recipe Name</th>
+                <th>Created On</th>
+                <th>Created By User</th>
+                <th>View</th>
+            </tr>
+            @foreach (Recipe result in Model.SearchResults)
+            {
+                <tr>
+                    <td>
+                        <p>@result.RecipeName</p>
+                    </td>
+                    <td>
+                        @result.CreatedOnDateTime
+                    </td>
+                    <td>
+                        @result.UserID
+                    </td>
+                    <td>
+                        @Html.ActionLink("View Recipe", "ViewRecipe", "Home", new { @RecipeID = result.RecipeID })
+                    </td>
+                </tr>
+            }
+        </table>
     </div>
 </div>

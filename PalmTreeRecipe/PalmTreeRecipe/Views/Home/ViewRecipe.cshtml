@@ -1,0 +1,16 @@
+﻿@using PalmTreeRecipe.Models
+@model Recipe
+
+<div class="body-content">
+    <div class="recipeTitle">
+        <h2>@Model.RecipeName</h2>
+    </div>
+    <div class="recipeSteps">
+        <table>
+            @foreach(Step step in Model.Steps)
+            {
+
+            }
+        </table>
+    </div>
+</div>

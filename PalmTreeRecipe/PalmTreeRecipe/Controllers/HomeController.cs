@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PalmTreeRecipe.Connectors;
 using PalmTreeRecipe.Models;
 
@@ -183,6 +184,14 @@ namespace PalmTreeRecipe.Controllers
             else
             {
                 List<string> errors = new List<string>();
+                if(!string.IsNullOrEmpty(recipe.EnteredSteps))
+                {
+                    recipe.Steps = JsonConvert.DeserializeObject<List<Step>>(recipe.EnteredSteps);
+                }
+                if(!string.IsNullOrEmpty(recipe.EnteredIngredients))
+                {
+                    recipe.Ingredients = JsonConvert.DeserializeObject<List<Ingredient>>(recipe.EnteredIngredients);
+                }
                 if(oFactory.recipeValidation.ValidateAddUpdateRecipe(recipe, ref errors))
                 {
                     recipe.UserID = loggedInUser.userId;
@@ -201,6 +210,7 @@ namespace PalmTreeRecipe.Controllers
         [HttpGet]
         public ActionResult SearchRecipe()
         {
+            //get call to search page
             RecipeSearch search = new RecipeSearch();
             search.SearchResults = new List<Recipe>();
             return View(search);
@@ -209,9 +219,25 @@ namespace PalmTreeRecipe.Controllers
         [HttpPost]
         public ActionResult SearchRecipe(RecipeSearch search)
         {
+            //run the search function and send back the results
             List<Recipe> searchResults = oFactory.recipeEndpoint.searchRecipes(search);
             search.SearchResults = searchResults;
             return View(search);
+        }
+
+        [HttpGet]
+        public ActionResult ViewRecipe(int RecipeID)
+        {
+            //get the individual recipe they want to view
+            Recipe recipe = oFactory.recipeEndpoint.getRecipeByID(RecipeID);
+            if(recipe != null)
+            {
+                return View(recipe);
+            } else
+            {
+                //if we couldn't find the recipe send the back to the search page
+                return View("SearchRecipe");
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

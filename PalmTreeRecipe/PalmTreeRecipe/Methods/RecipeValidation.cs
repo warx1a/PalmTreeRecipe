@@ -13,11 +13,11 @@ namespace PalmTreeRecipe.Methods {
             {
                 errors.Add("Recipe name cannot be empty");
             }
-            if(string.IsNullOrEmpty(recipe.Steps))
+            if(recipe.Steps.Count.Equals(0))
             {
                 errors.Add("Recipe must have at least 1 step");
             }
-            if(string.IsNullOrEmpty(recipe.Ingredients))
+            if(recipe.Ingredients.Count.Equals(0))
             {
                 errors.Add("Recipe must have at least 1 ingredient");
             }

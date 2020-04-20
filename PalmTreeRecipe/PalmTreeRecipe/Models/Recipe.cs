@@ -12,7 +12,7 @@ namespace PalmTreeRecipe.Models
 
         }
 
-        public Recipe(int RecipeID, int UserID, string Tags, string RecipeName, string Ingredients, string steps)
+        public Recipe(int RecipeID, int UserID, string Tags, string RecipeName, List<Ingredient> Ingredients, List<Step> steps)
         {
             this.RecipeID = RecipeID;
             this.UserID = UserID;
@@ -27,9 +27,11 @@ namespace PalmTreeRecipe.Models
         public int UserID { get; set; }
         public string Tags { get; set; }
         public string RecipeName { get; set; }
-        public string Ingredients { get; set; }
-        public string Steps { get; set; }
+        public List<Ingredient> Ingredients { get; set; }
+        public List<Step> Steps { get; set; }
         public DateTime CreatedOnDateTime { get; set; }
+        public string EnteredSteps { get; set; }
+        public string EnteredIngredients { get; set; }
 
     }
 }

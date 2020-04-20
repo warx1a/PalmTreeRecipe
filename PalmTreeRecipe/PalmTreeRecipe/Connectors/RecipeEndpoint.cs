@@ -1,4 +1,5 @@
-﻿using PalmTreeRecipe.Models;
+﻿using Newtonsoft.Json;
+using PalmTreeRecipe.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -18,11 +19,11 @@ namespace PalmTreeRecipe.Connectors {
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@userid", recipe.UserID);
                 cmd.Parameters.AddWithValue("@recipename", recipe.RecipeName);
-                cmd.Parameters.AddWithValue("@stepjson", recipe.Steps);
+                cmd.Parameters.AddWithValue("@stepjson", JsonConvert.SerializeObject(recipe.Steps));
                 //TODO: going to add these fields in eventually
                 cmd.Parameters.AddWithValue("@recipeicon", DBNull.Value);
                 cmd.Parameters.AddWithValue("@recipetags", DBNull.Value);
-                cmd.Parameters.AddWithValue("@ingredients", recipe.Ingredients);
+                cmd.Parameters.AddWithValue("@ingredients", JsonConvert.SerializeObject(recipe.Ingredients));
                 cmd.Parameters.AddWithValue("@createdOn", recipe.CreatedOnDateTime);
                 int rowsAffected = cmd.ExecuteNonQuery();
                 if(rowsAffected.Equals(1))
@@ -36,7 +37,7 @@ namespace PalmTreeRecipe.Connectors {
         public List<Recipe> getLatestRecipes()
         {
             List<Recipe> latestRecipes = new List<Recipe>();
-            string query = "SELECT & FROM [Recipe]";
+            string query = "SELECT & FROM [Recipe] ORDER BY createdOnDateTime ASC";
             using(SqlConnection conn = new SqlConnection(DB_URL))
             {
                 conn.Open();
@@ -48,10 +49,11 @@ namespace PalmTreeRecipe.Connectors {
                     r.RecipeID = getValueOrDefault<int>(0, results);
                     r.RecipeName = getValueOrDefault<string>(2, results);
                     r.UserID = getValueOrDefault<int>(1, results);
-                    r.Steps = getValueOrDefault<string>(3, results);
+                    r.Steps = JsonConvert.DeserializeObject<List<Step>>(getValueOrDefault<string>(3, results));
                     r.Icon = getValueOrDefault<string>(4, results);
                     r.Tags = getValueOrDefault<string>(5, results);
-                    r.Ingredients = getValueOrDefault<string>(6, results);
+                    r.Ingredients = JsonConvert.DeserializeObject<List<Ingredient>>(getValueOrDefault<string>(6, results));
+                    r.CreatedOnDateTime = getValueOrDefault<DateTime>(7, results);
                     latestRecipes.Add(r);
                 }
             }
@@ -97,15 +99,44 @@ namespace PalmTreeRecipe.Connectors {
                     r.RecipeID = getValueOrDefault<int>(0, results);
                     r.RecipeName = getValueOrDefault<string>(2, results);
                     r.UserID = getValueOrDefault<int>(1, results);
-                    r.Steps = getValueOrDefault<string>(3, results);
+                    string stepJSON = getValueOrDefault<string>(3, results);
+                    r.Steps = JsonConvert.DeserializeObject<List<Step>>(stepJSON);
                     r.Icon = getValueOrDefault<string>(4, results);
                     r.Tags = getValueOrDefault<string>(5, results);
-                    r.Ingredients = getValueOrDefault<string>(6, results);
+                    string ingredientJSON = getValueOrDefault<string>(6, results);
+                    r.Ingredients = JsonConvert.DeserializeObject<List<Ingredient>>(ingredientJSON);
                     r.CreatedOnDateTime = getValueOrDefault<DateTime>(7, results);
+
                     searchResults.Add(r);
                 }
             }
             return searchResults;
+        }
+
+        public Recipe getRecipeByID(int RecipeID)
+        {
+            string query = "SELECT * FROM [Recipe] WHERE [recipeId] = @id";
+            using(SqlConnection conn = new SqlConnection(DB_URL))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@id", RecipeID);
+                SqlDataReader results = cmd.ExecuteReader();
+                if(results.Read())
+                {
+                    Recipe r = new Recipe();
+                    r.RecipeID = getValueOrDefault<int>(0, results);
+                    r.RecipeName = getValueOrDefault<string>(2, results);
+                    r.UserID = getValueOrDefault<int>(1, results);
+                    r.Steps = JsonConvert.DeserializeObject<List<Step>>(getValueOrDefault<string>(3, results));
+                    r.Icon = getValueOrDefault<string>(4, results);
+                    r.Tags = getValueOrDefault<string>(5, results);
+                    r.Ingredients = JsonConvert.DeserializeObject<List<Ingredient>>(getValueOrDefault<string>(6, results));
+                    r.CreatedOnDateTime = getValueOrDefault<DateTime>(7, results);
+                    return r;
+                }
+            }
+            return null;
         }
 
     }

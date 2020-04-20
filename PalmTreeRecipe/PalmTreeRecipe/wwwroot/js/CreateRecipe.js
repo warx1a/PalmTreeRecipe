@@ -104,20 +104,22 @@
             recipeSteps.push(stepText);
         });
         //go through each ingredient and add it to the hidden
-        var hdnIngredientVal = "";
+        var hdnIngredientVal = "[";
         for (var i = 0; i < recipeIngredients.length; i++) {
             var ingredient = recipeIngredients[i];
-            hdnIngredientVal += "{name:'" + ingredient.name + "' quantity:'" + ingredient.quantity + "'},";
+            hdnIngredientVal += '{"name":"' + ingredient.name + '", "quantity":"' + ingredient.quantity + '"},';
         }
         hdnIngredientVal = hdnIngredientVal.substring(0, hdnIngredientVal.length - 1);
-        $("#Ingredients").val(hdnIngredientVal);
+        hdnIngredientVal += "]";
+        $("#EnteredIngredients").val(hdnIngredientVal);
         //go through each step and add it to the hidden
-        var stepVal = "";
+        var stepVal = "[";
         for (var i = 0; i < recipeSteps.length; i++) {
             var step = recipeSteps[i];
-            stepVal += "{text: '" + step + "'},";
+            stepVal += '{"text": "' + step + '"},';
         }
         stepVal = stepVal.substring(0, stepVal.length - 1);
-        $("#Steps").val(stepVal);
+        stepVal += "]";
+        $("#EnteredSteps").val(stepVal);
     });
 });
