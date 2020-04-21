@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PalmTreeRecipe.Models
 {
-    public class Review
+    public class Review : BaseModel
     {
 
         public int reviewId { get; set; }

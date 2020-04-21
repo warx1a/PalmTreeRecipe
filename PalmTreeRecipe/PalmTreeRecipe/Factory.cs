@@ -36,6 +36,17 @@ namespace PalmTreeRecipe {
             }
         }
 
+        private ReviewEndpoint _reviewEndpoint;
+        public ReviewEndpoint reviewEndpoint {
+            get {
+                if(_reviewEndpoint == null)
+                {
+                    _reviewEndpoint = new ReviewEndpoint();
+                }
+                return _reviewEndpoint;
+            }
+        }
+
         private UserValidation _userValidation;
         public UserValidation userValidation {
             get {

@@ -240,6 +240,39 @@ namespace PalmTreeRecipe.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult ReviewRecipe(int RecipeID)
+        {
+            User loggedInUser = oFactory.userEndpoint.getUserBySessionId(HttpContext.Session.GetString("sessionid"));
+            if(loggedInUser == null)
+            {
+                return View("Login");
+            } else
+            {
+                Review review = new Review();
+                review.errorMessages = new List<string>();
+                review.recipeId = RecipeID;
+                review.userId = loggedInUser.userId;
+                return View(review);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ReviewRecipe(Review review)
+        {
+            review.timestamp = DateTime.Now;
+            //if we successfully added the review then return to the recipe page for it
+            if(oFactory.reviewEndpoint.addReview(review))
+            {
+                return View("ViewRecipe", review.recipeId);
+            //if we couldn't add the review then go back to the review page
+            } else
+            {
+                review.errorMessages.Add("Your review was unable to be added. Please try again.");
+                return View(review);
+            }
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
