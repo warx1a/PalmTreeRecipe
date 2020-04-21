@@ -133,5 +133,22 @@ namespace PalmTreeRecipe.Connectors
                 return rowsAffected.Equals(1);
             }
         }
+
+        public bool doesUsernameExist(string username)
+        {
+            string query = "SELECT * FROM [User] WHERE `username` = @usn";
+            using(SqlConnection conn = new SqlConnection(DB_URL))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@usn", username);
+                SqlDataReader results = cmd.ExecuteReader();
+                if(results.HasRows && results.Read())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

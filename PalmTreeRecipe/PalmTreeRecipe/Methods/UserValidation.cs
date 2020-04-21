@@ -12,6 +12,8 @@ namespace PalmTreeRecipe.Methods {
         private string alphaNumericRegex = @"(^[a-zA-Z0-9]+$)";
         private EmailAddressAttribute emailAttr = new EmailAddressAttribute();
 
+        private Factory factory = new Factory();
+
         public bool ValidateAddUpdateProfileInfo(User user, bool isAdd, ref List<string> errors)
         {
             //add user validation here for the postback
@@ -27,6 +29,9 @@ namespace PalmTreeRecipe.Methods {
             else if (user.username.Length < 8)
             {
                 errors.Add("Username must be at least 5 characters");
+            } else if(factory.userEndpoint.doesUsernameExist(user.username))
+            {
+                errors.Add("Username already exists in the database");
             }
             //password validation if adding
             if(isAdd)

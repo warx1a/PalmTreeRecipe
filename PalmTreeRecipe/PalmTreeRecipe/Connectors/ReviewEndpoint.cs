@@ -50,5 +50,39 @@ namespace PalmTreeRecipe.Connectors {
             return recipeReviews;
         }
 
+        public bool hasReviewedRecipe(int userId, int recipeId)
+        {
+            string query = "SELECT * FROM Review WHERE userId = @userid AND recipeId = @recipeId";
+            using(SqlConnection conn = new SqlConnection(DB_URL))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@userid", userId);
+                cmd.Parameters.AddWithValue("@recipeId", recipeId);
+                SqlDataReader results = cmd.ExecuteReader();
+                if(results.HasRows && results.Read())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool updateReview(Review review)
+        {
+            string query = "UPDATE Review SET reviewText = @text, reviewTimestamp = @timestmap, rating = @rating WHERE reviewId = @reviewid";
+            using(SqlConnection conn = new SqlConnection(DB_URL))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@text", review.text);
+                cmd.Parameters.AddWithValue("@timestamp", review.timestamp);
+                cmd.Parameters.AddWithValue("@rating", review.rating);
+                cmd.Parameters.AddWithValue("@reviewid", review.reviewId);
+                int rowsAffected = cmd.ExecuteNonQuery();
+                return rowsAffected.Equals(1);
+            }
+        }
+
     }
 }
