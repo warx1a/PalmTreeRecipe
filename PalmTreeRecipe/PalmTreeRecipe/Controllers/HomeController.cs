@@ -212,7 +212,7 @@ namespace PalmTreeRecipe.Controllers
         {
             //get call to search page
             RecipeSearch search = new RecipeSearch();
-            search.SearchResults = new List<Recipe>();
+            search.SearchResults = new List<RecipeItemView>();
             return View(search);
         }
 
@@ -221,7 +221,16 @@ namespace PalmTreeRecipe.Controllers
         {
             //run the search function and send back the results
             List<Recipe> searchResults = oFactory.recipeEndpoint.searchRecipes(search);
-            search.SearchResults = searchResults;
+            List<RecipeItemView> viewModelResults = new List<RecipeItemView>();
+            foreach(Recipe result in searchResults)
+            {
+                RecipeItemView riv = new RecipeItemView();
+                riv.Recipe = result;
+                riv.CreatedByUser = oFactory.userEndpoint.getUserById(result.UserID);
+                riv.Reviews = oFactory.reviewEndpoint.getReviewsForRecipe(result.RecipeID);
+                viewModelResults.Add(riv);
+            }
+            search.SearchResults = viewModelResults;
             return View(search);
         }
 

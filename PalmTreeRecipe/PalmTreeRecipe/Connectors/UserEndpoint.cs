@@ -150,5 +150,29 @@ namespace PalmTreeRecipe.Connectors
             }
             return false;
         }
+
+        public User getUserById(int userid)
+        {
+            string query = "SELECT * FROM [User] WHERE [userId] = @userid";
+            using(SqlConnection conn = new SqlConnection(DB_URL))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@userid", userid);
+                SqlDataReader results = cmd.ExecuteReader();
+                if(results.HasRows && results.Read())
+                {
+                    int userId = getValueOrDefault<int>(0, results);
+                    string username = getValueOrDefault<string>(1, results);
+                    string email = getValueOrDefault<string>(3, results);
+                    string firstName = getValueOrDefault<string>(5, results);
+                    string lastName = getValueOrDefault<string>(6, results);
+                    int userType = getValueOrDefault<int>(7, results);
+                    User u = new User(userId, username, null, email, null, firstName, lastName, userType);
+                    return u;
+                }
+            }
+            return null;
+        }
     }
 }

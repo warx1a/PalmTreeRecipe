@@ -1,6 +1,8 @@
 ﻿@using PalmTreeRecipe.Models;
 @model RecipeSearch
 
+<link rel="stylesheet" type="text/css" href="~/css/searchRecipe.css" />
+
 <div class="body-content">
     @using(Html.BeginForm("SearchRecipe", "Home", FormMethod.Post))
     {
@@ -18,6 +20,7 @@
                     @Html.LabelFor(m => m.SearchByUserID, "User: ")
                 </td>
                 <td>
+                    @*todo: add user drop down list to choose from*@
                     @Html.TextBoxFor(m => m.SearchByUserID)
                 </td>
             </tr>
@@ -40,20 +43,20 @@
                 <th>Created By User</th>
                 <th>View</th>
             </tr>
-            @foreach (Recipe result in Model.SearchResults)
+            @foreach (RecipeItemView result in Model.SearchResults)
             {
                 <tr>
                     <td>
-                        <p>@result.RecipeName</p>
+                        <p>@result.Recipe.RecipeName</p>
                     </td>
                     <td>
-                        @result.CreatedOnDateTime
+                        @result.Recipe.CreatedOnDateTime.ToString("M/d/yyyy")
                     </td>
                     <td>
-                        @result.UserID
+                        @result.CreatedByUser.username
                     </td>
                     <td>
-                        @Html.ActionLink("View Recipe", "ViewRecipe", "Home", new { @RecipeID = result.RecipeID })
+                        @Html.ActionLink("View Recipe", "ViewRecipe", "Home", new { @RecipeID = result.Recipe.RecipeID }, new { @class = "viewRecLink" })
                     </td>
                 </tr>
             }

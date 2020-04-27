@@ -1,0 +1,13 @@
+﻿.searchResultArea table {
+    border: 2px solid var(--darkbrown);
+    border-collapse: collapse;
+}
+
+.searchResultArea table tr {
+    border-bottom: 2px solid var(--medbrown);
+}
+
+.viewRecLink:-webkit-any-link {
+    color: black;
+    text-decoration: underline;
+}

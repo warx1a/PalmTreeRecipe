@@ -13,3 +13,38 @@
     display: inline-block;
     width: 50vw;
 }
+
+.ingredientHolder, .stepHolder {
+    width: 45%;
+    display: inline-block;
+}
+
+.viewRecipeTbl {
+    border: 2px solid var(--darkbrown);
+    border-collapse: collapse;
+}
+
+.viewRecipeTbl tr:first-of-type {
+    border-bottom: 2px solid var(--medbrown);
+}
+
+.recipeActions {
+    display: block;
+}
+
+.recipeActions ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    list-style: none;
+    text-align: center;
+}
+
+.actionIcon {
+    width: 50px;
+    height: 50px;
+}
+
+.recipeActions ul li p {
+    padding: 0px;
+}

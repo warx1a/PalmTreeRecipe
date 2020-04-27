@@ -8,7 +8,7 @@ namespace PalmTreeRecipe.Models {
 
         public string TypedText { get; set; }
 
-        public List<Recipe> SearchResults { get; set; }
+        public List<RecipeItemView> SearchResults { get; set; }
 
         public int SearchByUserID { get; set; }
 

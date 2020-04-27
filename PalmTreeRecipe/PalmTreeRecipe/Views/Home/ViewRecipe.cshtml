@@ -8,8 +8,11 @@
         <h2>@Model.RecipeName</h2>
     </div>
     <div class="recipeIngredients">
-        <h3>Ingredients Needed</h3>
-        <table>
+        <table class="viewRecipeTbl">
+            <tr>
+                <th>Ingredient</th>
+                <th>Quantity</th>
+            </tr>
             @foreach(Ingredient ingredient in Model.Ingredients)
             {
                 <tr>
@@ -24,8 +27,10 @@
         </table>
     </div>
     <div class="recipeSteps">
-        <h3>Steps</h3>
-        <table>
+        <table class="viewRecipeTbl">
+            <tr>
+                <th>Steps</th>
+            </tr>
             @{ 
                 int stepIdx = 1;
             }  
@@ -33,11 +38,31 @@
             {
                 <tr>
                     <td>
-                        @stepIdx.ToString() @step.text
+                        @stepIdx.ToString(). @step.text
                     </td>
                 </tr>
                 stepIdx++;
             }
         </table>
+    </div>
+    <div class="recipeActions">
+        <ul>
+            <li>
+                <input type="image" src="~/images/fb_share.png" class="actionIcon" id="btnFBShare" />
+                <p>Share on Facebook</p>
+            </li>
+            <li>
+                <input type="image" src="~/images/leave_feedback.png" class="actionIcon" id="btnReview" />
+                <p>Review Recipe</p>
+            </li>
+            <li>
+                <input type="image" src="~/images//share_as_email.png" class="actionIcon" id="btnEmailShare" />
+                <p>Email Recipe</p>
+            </li>
+            <li>
+                <input type="image" src="~/images/view_feedback.png" class="actionIcon" id="btnViewReviews" />
+                <p>View Reviews</p>
+            </li>
+        </ul>
     </div>
 </div>
