@@ -282,6 +282,24 @@ namespace PalmTreeRecipe.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult ViewReviews(int RecipeID)
+        {
+            List<Review> reviews = oFactory.reviewEndpoint.getReviewsForRecipe(RecipeID);
+            List<ReviewItemView> reviewItems = new List<ReviewItemView>();
+            foreach(Review review in reviews)
+            {
+                Recipe recipe = oFactory.recipeEndpoint.getRecipeByID(RecipeID);
+                User postedByUser = oFactory.userEndpoint.getUserById(review.userId);
+                ReviewItemView riv = new ReviewItemView();
+                riv.recipe = recipe;
+                riv.createdByUser = postedByUser;
+                riv.review = review;
+                reviewItems.Add(riv);
+            }
+            return View(reviewItems);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -48,20 +48,28 @@
     <div class="recipeActions">
         <ul>
             <li>
-                <input type="image" src="~/images/fb_share.png" class="actionIcon" id="btnFBShare" />
-                <p>Share on Facebook</p>
+                <form method="get" action="">
+                    <input type="image" src="~/images/fb_share.png" class="actionIcon" id="btnFBShare" />
+                    <p>Share on Facebook</p>
+                </form>
             </li>
             <li>
-                <input type="image" src="~/images/leave_feedback.png" class="actionIcon" id="btnReview" />
-                <p>Review Recipe</p>
+                @using (Html.BeginForm("ReviewRecipe", "Home", FormMethod.Get))
+                {
+                    <input type="image" src="~/images/leave_feedback.png" class="actionIcon" id="btnReview" name="RecipeID" value="@Model.RecipeID" />
+                    <p>Review Recipe</p>
+                }
             </li>
             <li>
-                <input type="image" src="~/images//share_as_email.png" class="actionIcon" id="btnEmailShare" />
+                <input type="image" src="~/images/share_as_email.png" class="actionIcon" id="btnEmailShare" />
                 <p>Email Recipe</p>
             </li>
             <li>
-                <input type="image" src="~/images/view_feedback.png" class="actionIcon" id="btnViewReviews" />
-                <p>View Reviews</p>
+                @using (Html.BeginForm("ViewReviews", "Home", FormMethod.Get))
+                {
+                    <input type="image" src="~/images/view_feedback.png" class="actionIcon" id="btnViewReviews" name="RecipeID" value="@Model.RecipeID" />
+                    <p>View Reviews</p>
+                }
             </li>
         </ul>
     </div>
