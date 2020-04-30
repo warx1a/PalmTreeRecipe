@@ -6,6 +6,16 @@
     --darkbrown: rgb(33, 22, 26);
 }
 
+@font-face {
+    font-family: "VeganStyle";
+    src: url("../font/VeganStyle.ttf");
+}
+
+@font-face {
+    font-family: "BlackberryJam";
+    src: url("../font/BlackberryJam.ttf");
+}
+
 
 body {
     margin: 0;
@@ -26,6 +36,7 @@ body {
 nav {
     background-color: var(--medbrown);
     height: 10vh;
+    font-family: VeganStyle, Arial, Helvetica, sans-serif;
 }
 
 nav ul {
@@ -38,13 +49,12 @@ nav ul {
 }
 
 nav ul li p {
-    width: 150px;
+    width: 175px;
     text-align: center;
     color: var(--dirtywhite) !important;
     background-color: var(--darkbrown);
     border-radius: 3px;
-    font-family: "Arial Black", Gadget, sans-serif;
-    font-size: 15px;
+    font-size: 120%;
 }
 
 a:-webkit-any-link {
@@ -100,4 +110,31 @@ footer p {
 .ui-dialog {
     background: white;
     border: 2px solid black;
+}
+
+#frmLogin {
+    padding-top: 15vh;
+}
+
+#frmLogin table {
+    font-family: BlackberryJam, Arial, Helvetica, sans-serif;
+}
+
+#btnLogin {
+    width: 100%;
+    font-family: BlackberryJam, Arial, Helvetica, sans-serif;
+    background-color: var(--medbrown);
+    border: 1px solid white;
+    color: white;
+    margin: 0 auto;
+    display: block;
+}
+
+.formHeader {
+    text-align: center;
+    display: block;
+    font-weight: bold;
+    font-size: 140%;
+    color: var(--darkbrown);
+    font-family: VeganStyle, Arial, Helvetica, sans-serif;
 }

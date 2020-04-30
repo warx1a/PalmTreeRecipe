@@ -1,9 +1,11 @@
 ﻿.searchResultArea table {
     border: 2px solid var(--darkbrown);
     border-collapse: collapse;
+    width: 40vw;
 }
 
 .searchResultArea table tr {
+    text-align: center;
     border-bottom: 2px solid var(--medbrown);
 }
 

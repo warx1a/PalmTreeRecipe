@@ -64,13 +64,6 @@
                 <input type="image" src="~/images/share_as_email.png" class="actionIcon" id="btnEmailShare" />
                 <p>Email Recipe</p>
             </li>
-            <li>
-                @using (Html.BeginForm("ViewReviews", "Home", FormMethod.Get))
-                {
-                    <input type="image" src="~/images/view_feedback.png" class="actionIcon" id="btnViewReviews" name="RecipeID" value="@Model.RecipeID" />
-                    <p>View Reviews</p>
-                }
-            </li>
         </ul>
     </div>
 </div>

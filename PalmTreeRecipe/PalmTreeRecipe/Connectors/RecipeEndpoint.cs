@@ -37,7 +37,7 @@ namespace PalmTreeRecipe.Connectors {
         public List<Recipe> getLatestRecipes()
         {
             List<Recipe> latestRecipes = new List<Recipe>();
-            string query = "SELECT & FROM [Recipe] ORDER BY createdOnDateTime ASC";
+            string query = "SELECT & FROM [Recipe] ORDER BY createdOnDateTime DESC";
             using(SqlConnection conn = new SqlConnection(DB_URL))
             {
                 conn.Open();
