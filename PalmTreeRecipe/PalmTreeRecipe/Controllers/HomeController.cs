@@ -23,7 +23,7 @@ namespace PalmTreeRecipe.Controllers
             Index idx = new Index();
             //TODO: populate these fields w/ latest and featured recipes
             idx.featuredRecipes = new List<Recipe>();
-            idx.latestRecipes = new List<Recipe>();
+            idx.latestRecipes = oFactory.recipeEndpoint.getLatestRecipes();
             return View(idx);
         }
 
@@ -56,7 +56,7 @@ namespace PalmTreeRecipe.Controllers
                 HttpContext.Session.SetString("sessionid", user.sessionId);
                 Index idx = new Index();
                 idx.featuredRecipes = new List<Recipe>();
-                idx.latestRecipes = new List<Recipe>();
+                idx.latestRecipes = oFactory.recipeEndpoint.getLatestRecipes();
                 return View("Index", idx);
             } else
             {
@@ -239,9 +239,13 @@ namespace PalmTreeRecipe.Controllers
         {
             //get the individual recipe they want to view
             Recipe recipe = oFactory.recipeEndpoint.getRecipeByID(RecipeID);
+            RecipeItemView riv = new RecipeItemView();
+            riv.Recipe = recipe;
+            riv.Reviews = oFactory.reviewEndpoint.getReviewsForRecipe(recipe.RecipeID);
+            riv.CreatedByUser = oFactory.userEndpoint.getUserById(recipe.UserID);
             if(recipe != null)
             {
-                return View(recipe);
+                return View(riv);
             } else
             {
                 //if we couldn't find the recipe send the back to the search page
@@ -255,7 +259,10 @@ namespace PalmTreeRecipe.Controllers
             User loggedInUser = oFactory.userEndpoint.getUserBySessionId(HttpContext.Session.GetString("sessionid"));
             if(loggedInUser == null)
             {
-                return View("Login");
+                Login l = new Login();
+                l.errorMessages = new List<string>();
+                l.errorMessages.Add("Please log in to leave a review");
+                return View("Login", l);
             } else
             {
                 Review review = new Review();
@@ -280,24 +287,6 @@ namespace PalmTreeRecipe.Controllers
                 review.errorMessages.Add("Your review was unable to be added. Please try again.");
                 return View(review);
             }
-        }
-
-        [HttpGet]
-        public ActionResult ViewReviews(int RecipeID)
-        {
-            List<Review> reviews = oFactory.reviewEndpoint.getReviewsForRecipe(RecipeID);
-            List<ReviewItemView> reviewItems = new List<ReviewItemView>();
-            foreach(Review review in reviews)
-            {
-                Recipe recipe = oFactory.recipeEndpoint.getRecipeByID(RecipeID);
-                User postedByUser = oFactory.userEndpoint.getUserById(review.userId);
-                ReviewItemView riv = new ReviewItemView();
-                riv.recipe = recipe;
-                riv.createdByUser = postedByUser;
-                riv.review = review;
-                reviewItems.Add(riv);
-            }
-            return View(reviewItems);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

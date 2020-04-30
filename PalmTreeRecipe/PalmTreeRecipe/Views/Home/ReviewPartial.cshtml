@@ -1,0 +1,9 @@
+﻿@using PalmTreeRecipe.Connectors
+@model Review
+<div class="reviewBody">
+    <div class="reviewerName">@Model.userId</div>
+    <div class="reviewText">@Model.text</div>
+    <div class="reviewTimestamp">
+        @Model.timestamp
+    </div>
+</div>

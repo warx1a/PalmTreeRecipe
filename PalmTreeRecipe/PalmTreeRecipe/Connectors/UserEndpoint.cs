@@ -136,7 +136,7 @@ namespace PalmTreeRecipe.Connectors
 
         public bool doesUsernameExist(string username)
         {
-            string query = "SELECT * FROM [User] WHERE `username` = @usn";
+            string query = "SELECT * FROM [User] WHERE [username] = @usn";
             using(SqlConnection conn = new SqlConnection(DB_URL))
             {
                 conn.Open();

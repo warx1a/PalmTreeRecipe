@@ -22,7 +22,7 @@
         <p>These are our latest recipes:</p>
         @foreach(Recipe latestRecipe in Model.latestRecipes)
         {
-            //will print out the latest recipes
+            Html.RenderPartial("RecipePartial", latestRecipe);
         }
     </div>
 </div>

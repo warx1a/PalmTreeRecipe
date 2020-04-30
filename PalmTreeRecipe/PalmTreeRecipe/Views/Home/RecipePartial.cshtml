@@ -1,0 +1,8 @@
+﻿@model Recipe
+
+<div class="recipeHolder">
+    <div class="recipeName">@Model.RecipeName</div>
+    <div class="recipeLink">
+        @Html.ActionLink("View Recipe", "ViewRecipe", "Home", new { @RecipeID = Model.RecipeID })
+    </div>
+</div>

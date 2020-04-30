@@ -35,9 +35,10 @@
 .recipeActions ul {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     list-style: none;
     text-align: center;
+    padding: 0;
 }
 
 .actionIcon {
