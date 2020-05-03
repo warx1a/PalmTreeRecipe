@@ -289,6 +289,14 @@ namespace PalmTreeRecipe.Controllers
             }
         }
 
+        [HttpGet] //ajax call to get all users. used on search page
+        public JsonResult GetAllUsers()
+        {
+            List<User> allusers = oFactory.userEndpoint.getAllUsers();
+            //we only need the first and last name from each user so we'll filter them out
+            return new JsonResult(allusers.Select((itm) => new { @FirstName = itm.firstName, @LastName = itm.lastName}).ToList());
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

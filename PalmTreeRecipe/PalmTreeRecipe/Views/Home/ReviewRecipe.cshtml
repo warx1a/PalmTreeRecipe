@@ -1,10 +1,11 @@
 ﻿@model Review
 
 <div class="body-content">
-    @using(Html.BeginForm("ReviewRecipe", "Home", new { @id = "frmRecipeReview" }))
+    @using (Html.BeginForm("ReviewRecipe", "Home", FormMethod.Post, new { @id = "frmRecipeReview" }))
     {
         @Html.HiddenFor(m => m.recipeId)
         @Html.HiddenFor(m => m.userId)
+        @Html.HiddenFor(m => m.rating)
         <table>
             <tr>
                 <td>
@@ -33,6 +34,16 @@
                     @Html.TextAreaFor(m => m.text)
                 </td>
             </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <input type="submit" value="Leave Review" />
+                </td>
+            </tr>
         </table>
     }
 </div>
+
+
+<script type="text/javascript" src="~/js/reviewRecipe.js"></script>

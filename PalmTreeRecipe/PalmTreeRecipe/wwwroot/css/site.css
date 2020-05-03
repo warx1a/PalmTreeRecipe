@@ -1,9 +1,9 @@
 ﻿:root {
     --silvergray: rgb(140, 166, 179);
     --dirtywhite: rgb(216, 229, 237);
-    --tan: rgb(226, 206, 182);
-    --medbrown: rgb(86, 53, 48);
-    --darkbrown: rgb(33, 22, 26);
+    --tan: rgb(102, 154, 204);
+    --medbrown: rgb(151, 212, 205);
+    --darkbrown: rgb(2, 143, 152);
 }
 
 @font-face {

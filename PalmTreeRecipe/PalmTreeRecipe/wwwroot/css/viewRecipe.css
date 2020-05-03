@@ -49,3 +49,10 @@
 .recipeActions ul li p {
     padding: 0px;
 }
+
+#btnReview {
+    background-image: url("../images/leave_feedback.png");
+    background-size: 100%;
+    background-color: rgba(0,0,0, 0);
+    border: 0;
+}

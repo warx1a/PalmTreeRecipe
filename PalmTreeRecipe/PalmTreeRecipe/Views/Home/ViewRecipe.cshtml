@@ -77,7 +77,8 @@
             <li>
                 @using (Html.BeginForm("ReviewRecipe", "Home", FormMethod.Get))
                 {
-                    <input type="image" src="~/images/leave_feedback.png" class="actionIcon" id="btnReview" name="RecipeID" value="@Model.Recipe.RecipeID" />
+                    <input type="hidden" name="RecipeID" value="@Model.Recipe.RecipeID" />
+                    <input type="submit" src="~/images/leave_feedback.png" class="actionIcon" id="btnReview" value=""/>
                     <p>Review Recipe</p>
                 }
             </li>

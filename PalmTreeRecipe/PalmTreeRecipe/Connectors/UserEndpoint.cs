@@ -174,5 +174,29 @@ namespace PalmTreeRecipe.Connectors
             }
             return null;
         }
+
+        public List<User> getAllUsers()
+        {
+            List<User> allUsers = new List<User>();
+            string query = "SELECT * FROM [User]";
+            using(SqlConnection conn = new SqlConnection(DB_URL))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader results = cmd.ExecuteReader();
+                while(results.Read())
+                {
+                    int userId = getValueOrDefault<int>(0, results);
+                    string username = getValueOrDefault<string>(1, results);
+                    string email = getValueOrDefault<string>(3, results);
+                    string firstName = getValueOrDefault<string>(5, results);
+                    string lastName = getValueOrDefault<string>(6, results);
+                    int userType = getValueOrDefault<int>(7, results);
+                    User u = new User(userId, username, null, email, null, firstName, lastName, userType);
+                    allUsers.Add(u);
+                }
+            }
+            return allUsers;
+        }
     }
 }
