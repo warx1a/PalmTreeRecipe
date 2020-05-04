@@ -95,7 +95,7 @@ namespace PalmTreeRecipe.Controllers
                 Response.HttpContext.Session.SetString("sessionid", sessionId);
                 Index idx = new Index();
                 idx.featuredRecipes = new List<Recipe>();
-                idx.latestRecipes = new List<Recipe>();
+                idx.latestRecipes = oFactory.recipeEndpoint.getLatestRecipes();
                 return View("Index", idx);
             }
             return View(login);
@@ -280,7 +280,11 @@ namespace PalmTreeRecipe.Controllers
             //if we successfully added the review then return to the recipe page for it
             if(oFactory.reviewEndpoint.addReview(review))
             {
-                return View("ViewRecipe", review.recipeId);
+                RecipeItemView riv = new RecipeItemView();
+                riv.Recipe = oFactory.recipeEndpoint.getRecipeByID(review.recipeId);
+                riv.Reviews = oFactory.reviewEndpoint.getReviewsForRecipe(review.recipeId);
+                riv.CreatedByUser = oFactory.userEndpoint.getUserById(riv.Recipe.UserID);
+                return View("ViewRecipe", riv);
             //if we couldn't add the review then go back to the review page
             } else
             {

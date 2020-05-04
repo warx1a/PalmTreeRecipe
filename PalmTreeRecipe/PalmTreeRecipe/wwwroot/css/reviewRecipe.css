@@ -1,5 +1,4 @@
 ﻿div.stars {
-    width: 200px;
     display: inline-block;
 }
 
@@ -13,24 +12,6 @@ label.star {
     font-size: 36px;
     color: #444;
     transition: all .2s;
-}
-
-input.star:checked ~ label.star:before {
-    content: '\f005';
-    color: yellow;
-    transition: all .25s;
-}
-
-input.star-5:checked ~ label.star:before {
-    color: yellow;
-    text-shadow: 0 0 20px #952;
-}
-
-input.star-1:checked ~ label.star:before {
-    color: #F62;
-}
-
-label.star:before {
-    content: '\f006';
-    font-family: FontAwesome;
+    background-image: url("../images/emptyStar.png");
+    background-size: 100%;
 }
