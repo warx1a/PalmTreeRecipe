@@ -60,6 +60,27 @@ namespace PalmTreeRecipe.Connectors {
             return latestRecipes;
         }
 
+        //featured means highest rated recipes
+        public List<Recipe> getFeaturedRecipes()
+        {
+            List<Recipe> featuredRecipes = new List<Recipe>();
+            string query = "SELECT TOP (1000) Recipe.recipeId ,AVG([rating]) AS 'averageRating' FROM [dbo].[Review] INNER JOIN Recipe ON Review.recipeId = Recipe.recipeId GROUP BY Recipe.recipeId";
+            using(SqlConnection conn = new SqlConnection(DB_URL))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader results = cmd.ExecuteReader();
+                while(results.Read())
+                {
+                    int recipeID = getValueOrDefault<int>(0, results);
+                    int avgRating = getValueOrDefault<int>(1, results);
+                    Recipe featuredRecipe = getRecipeByID(recipeID);
+                    featuredRecipes.Add(featuredRecipe);
+                }
+            }
+            return featuredRecipes;
+        }
+
         public List<Recipe> searchRecipes(RecipeSearch search)
         {
             List<Recipe> searchResults = new List<Recipe>();

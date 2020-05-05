@@ -22,7 +22,7 @@ namespace PalmTreeRecipe.Controllers
         {
             Index idx = new Index();
             //TODO: populate these fields w/ latest and featured recipes
-            idx.featuredRecipes = new List<Recipe>();
+            idx.featuredRecipes = oFactory.recipeEndpoint.getFeaturedRecipes();
             idx.latestRecipes = oFactory.recipeEndpoint.getLatestRecipes();
             return View(idx);
         }
@@ -55,7 +55,7 @@ namespace PalmTreeRecipe.Controllers
                 user = oFactory.userEndpoint.createUser(user);
                 HttpContext.Session.SetString("sessionid", user.sessionId);
                 Index idx = new Index();
-                idx.featuredRecipes = new List<Recipe>();
+                idx.featuredRecipes = oFactory.recipeEndpoint.getFeaturedRecipes();
                 idx.latestRecipes = oFactory.recipeEndpoint.getLatestRecipes();
                 return View("Index", idx);
             } else
@@ -94,7 +94,7 @@ namespace PalmTreeRecipe.Controllers
             {
                 Response.HttpContext.Session.SetString("sessionid", sessionId);
                 Index idx = new Index();
-                idx.featuredRecipes = new List<Recipe>();
+                idx.featuredRecipes = oFactory.recipeEndpoint.getFeaturedRecipes();
                 idx.latestRecipes = oFactory.recipeEndpoint.getLatestRecipes();
                 return View("Index", idx);
             }
@@ -106,7 +106,7 @@ namespace PalmTreeRecipe.Controllers
         {
             Response.HttpContext.Session.Clear();
             Index idx = new Index();
-            idx.featuredRecipes = new List<Recipe>();
+            idx.featuredRecipes = oFactory.recipeEndpoint.getFeaturedRecipes();
             idx.latestRecipes = oFactory.recipeEndpoint.getLatestRecipes();
             return View("Index", idx);
         }
