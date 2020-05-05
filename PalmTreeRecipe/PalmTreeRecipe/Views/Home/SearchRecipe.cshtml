@@ -41,6 +41,7 @@
                 <th>Recipe Name</th>
                 <th>Created On</th>
                 <th>Created By User</th>
+                <th>Average Rating</th>
                 <th>View</th>
             </tr>
             @foreach (RecipeItemView result in Model.SearchResults)
@@ -54,6 +55,38 @@
                     </td>
                     <td>
                         @result.CreatedByUser.username
+                    </td>
+                    <td>
+                        @{ 
+                            var totalStars = 0;
+                            var totalReviews = 0;
+                            if(result.Reviews.Count.Equals(0))
+                            {
+                                <p>
+                                    N/A
+                                </p>
+                            } else
+                            {
+                                foreach(Review review in result.Reviews)
+                                {
+                                    totalStars += review.rating;
+                                    totalReviews++;
+                                }
+                                var averageRating = (double)totalStars / (double)totalReviews;
+                                <div class="ratingBar">
+                                    @for(var i = 1; i < 6; i++)
+                                    {
+                                        if(i <= averageRating)
+                                        {
+                                            <img src="~/images/transparentStar.png" class="filledStar" />
+                                        } else
+                                        {
+                                            <img src="~/images/emptyStar.png" class="emptyStar" />
+                                        }
+                                    }
+                                </div>
+                            }
+                        }
                     </td>
                     <td>
                         @Html.ActionLink("View Recipe", "ViewRecipe", "Home", new { @RecipeID = result.Recipe.RecipeID }, new { @class = "viewRecLink" })

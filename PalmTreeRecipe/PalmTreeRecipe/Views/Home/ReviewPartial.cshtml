@@ -1,9 +1,24 @@
 ﻿@using PalmTreeRecipe.Connectors
-@model Review
+@model ReviewItemView
 <div class="reviewBody">
-    <div class="reviewerName">@Model.userId</div>
-    <div class="reviewText">@Model.text</div>
-    <div class="reviewTimestamp">
-        @Model.timestamp
+    <div class="reviewIntro">
+        <p>On @Model.review.timestamp @Model.createdByUser.username said:</p>
+        <p class="reviewText">
+            @Model.review.text
+        </p>
+    </div>
+    <div class="ratingBar">
+        @{ 
+            for(var i = 1; i < 6; i++)
+            {
+                if(i <= Model.review.rating)
+                {
+                    <img src="~/images/transparentStar.png" class="filledStar"/>
+                } else
+                {
+                    <img src="~/images/emptyStar.png" class="emptyStar"/>
+                }
+            }
+        }
     </div>
 </div>

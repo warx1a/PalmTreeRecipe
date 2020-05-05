@@ -60,3 +60,11 @@
 #btnReview:hover {
     cursor: pointer;
 }
+
+.reviewBody {
+    height: 10vh;
+}
+
+.reviewIntro, .ratingBar {
+    height: 50%;
+}

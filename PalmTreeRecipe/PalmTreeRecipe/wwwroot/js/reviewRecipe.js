@@ -1,11 +1,13 @@
 ﻿$(document).ready(function () {
 
+    var rating = 0;
+
     $("#frmRecipeReview").submit(function () {
-        $("#rating").val(getStarCount());
-        console.log(getStarCount());
+        $("#rating").val(rating);
     });
 
     $(".stars input").change(function () {
+        rating = $(this).val();
         var pivotLabel = $("label." + $(this).attr("id"));
         pivotLabel.css("background-image", "url('../images/transparentStar.png')");
         pivotLabel.prevAll("label").css("background-image", "url('../images/emptyStar.png')");

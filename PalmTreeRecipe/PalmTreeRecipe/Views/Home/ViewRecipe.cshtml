@@ -1,7 +1,12 @@
 ﻿@using PalmTreeRecipe.Models
 @model RecipeItemView
 
+@{ 
+    Factory oFactory = new Factory();
+}
+
 <link rel="stylesheet" type="text/css" href="~/css/viewRecipe.css" />
+<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
 
 <div class="body-content">
     <div class="recipeTitle">
@@ -56,10 +61,14 @@
             </tr>
             @foreach(Review review in Model.Reviews)
             {
+                var reviewItemView = new ReviewItemView();
+                reviewItemView.review = review;
+                reviewItemView.recipe = oFactory.recipeEndpoint.getRecipeByID(review.recipeId);
+                reviewItemView.createdByUser = oFactory.userEndpoint.getUserById(review.userId);
                 <tr>
                     <td>
                         @{
-                            Html.RenderPartial("ReviewPartial", review);
+                            Html.RenderPartial("ReviewPartial", reviewItemView);
                         }
                     </td>
                 </tr>

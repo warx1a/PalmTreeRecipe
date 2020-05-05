@@ -138,3 +138,9 @@ footer p {
     color: var(--darkbrown);
     font-family: VeganStyle, Arial, Helvetica, sans-serif;
 }
+
+.filledStar, .emptyStar {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+}
