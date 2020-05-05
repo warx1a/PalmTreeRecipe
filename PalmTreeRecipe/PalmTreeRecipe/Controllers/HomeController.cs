@@ -102,6 +102,16 @@ namespace PalmTreeRecipe.Controllers
         }
 
         [HttpGet]
+        public ActionResult Logout()
+        {
+            Response.HttpContext.Session.Clear();
+            Index idx = new Index();
+            idx.featuredRecipes = new List<Recipe>();
+            idx.latestRecipes = oFactory.recipeEndpoint.getLatestRecipes();
+            return View("Index", idx);
+        }
+
+        [HttpGet]
         public ActionResult Profile()
         {
             Profile userProfile = new Profile();
